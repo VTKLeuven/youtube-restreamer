@@ -1,0 +1,23 @@
+# docker compose up -d        start (control page: http://<server>:8080/)
+# docker compose logs -f      see what it's doing
+# docker compose down         stop
+#
+# Settings come from a .env file next to this one (copy .env.example), or edit
+# the defaults below. Changes made on the control page last until a restart.
+services:
+  restreamer:
+    build: .
+    image: youtube-restreamer
+    container_name: youtube-restreamer
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      URL: ${URL:-}                    # empty = pick the stream on the control page
+      QUALITY: ${QUALITY:-best}
+      ON_DEMAND: ${ON_DEMAND:-1}       # 1 = only download while someone watches
+      IDLE_TIMEOUT: ${IDLE_TIMEOUT:-30}
+      ADVERTISE: ${ADVERTISE:-}        # server address shown in the logs, e.g. 192.168.1.10
+      PUBLIC_PORT: ${PORT:-8080}
+      TZ: ${TZ:-Europe/Brussels}       # for the log timestamps
+    mem_limit: 512m

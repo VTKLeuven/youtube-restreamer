@@ -1,0 +1,4 @@
+* text=auto
+# cmd.exe needs CRLF, sh needs LF, whatever OS the repo is cloned on
+*.bat text eol=crlf
+*.sh  text eol=lf
